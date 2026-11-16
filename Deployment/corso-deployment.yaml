@@ -9,11 +9,11 @@ spec:
   replicas: 5 #desired state - 5 pod sempre attivi
   selector:
     matchLabels:
-      app: corso-pod #pod da monitorare
+      app: corso-pod #container da monitorare
   template:
     metadata:
       labels:
-        app: corso-pod #il template del pod da usare per replicare
+        app: corso-pod #il template del container da usare per replicare
 
     spec:
       containers:
