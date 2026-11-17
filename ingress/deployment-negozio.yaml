@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-negozio
+  namespace: corso
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: negozio-api
+  template:
+    metadata:
+      labels:
+        app: negozio-api
+
+    spec:
+      containers:
+        - name: negozio-api
+          image: ghostmio/serviziojava-docker-package:v1
+          ports:
+            - containerPort: 80
