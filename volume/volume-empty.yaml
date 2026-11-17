@@ -1,0 +1,41 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: pod-shared-volume
+  namespace: corso
+
+spec:
+  containers:
+    - name: writer #container che scrive la data in un file di log
+      image: busybox
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo "writer avviato";
+          while true; do   
+          date  >> /data/log.txt;
+          sleep 2;
+          done
+      volumeMounts:
+        - name: shared-folder #nome del volume condiviso nel pod
+          mountPath: /data #nome della cartella del container da utilizzare per sherare i dati con il volume
+    - name: reader
+      image: alpine
+      command: ["sh", "-c"]
+      args:
+        - |
+          while true; do 
+          echo "--letto"
+          tail -n 3 /data/log.txt 2>/dev/null;
+          sleep 3;
+          done
+      volumeMounts:
+        - name: shared-folder
+          mountPath: /data
+          readOnly: true
+
+  volumes:
+    - name: shared-folder #il nome del volume condiviso al ivello di pod
+      emptyDir: {}
