@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment  
+
+metadata: 
+  name: deployment-operativo   
+  namespace: corso 
+
+
+spec:
+  replicas: 3 
+  selector: 
+    matchLabels:
+      app: container-operativo 
+  template:
+    metadata:
+      labels:
+        app: container-operativo 
+    spec:
+      containers:
+        - name: container-operativo
+          image: ghostmio/immo2:v2 # nginx:1.26
+          ports:
+            - containerPort: 80

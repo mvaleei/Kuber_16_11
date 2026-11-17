@@ -1,0 +1,22 @@
+apiVersion: v1  
+kind: Service 
+
+metadata:
+  name: corso-service
+  namespace: corso 
+
+spec:
+  selector:
+    app: container-service   #corrisponde al nome del container da esporre
+
+  ports:
+    - protocol: TCP 
+      port: 80
+      targetPort: 80 
+      nodePort:   30005 #30000 -> 32767 
+  type: NodePort
+  
+  #ClusterIP  viene utilizzato per esporre il servizio dentro il cluster (defulat - i può omettere)
+  #NodePort  si utilizza per esporre verso l'esterno il servizio (Senza load Balancer - API che nonrichiedono mole di risorse)
+  
+  #LoadBalancer   Uguale al nodePort, con in più il bilanciamento delle risorse (utilizzato per servizio con notevoli richeiste di risorse)

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment  
+
+metadata: 
+  name: deployment-service   
+  namespace: corso 
+
+
+spec:
+  replicas: 3 
+  selector: 
+    matchLabels:
+      app: container-service 
+  template:
+    metadata:
+      labels:
+        app: container-service 
+    spec:
+      containers:
+        - name: container-service
+          image: nginx:1.26
+          ports:
+            - containerPort: 80
