@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: corso-pod-config   
+  namespace: corso   
+
+spec:
+  containers: 
+    - name: pod-test  
+      image: busybox
+      command: ["sh", "-c", "echo Messaggio Letto: $MESSAGGIOLETTO - tipo progetto: $AMBIENTE && sleep 3600"]
+      env:
+        - name: MESSAGGIOLETTO #xxxxx
+          valueFrom: 
+            configMapKeyRef:
+              name: corso-config
+              key: MESSAGGIO  
+        - name: AMBIENTE 
+          valueFrom:
+            configMapKeyRef:
+              name: corso-config 
+              key: TIPOLOGIA
+
