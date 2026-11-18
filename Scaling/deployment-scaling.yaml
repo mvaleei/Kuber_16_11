@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-scaling
+  namespace: scaling
+
+spec:
+  replicas: 4 #valore iniziale che verrà bypassato da HPA
+
+  selector:
+    matchLabels:
+      app: lezione-hpa-pod
+  template:
+    metadata:
+      labels:
+        app: lezione-hpa-pod
+
+    spec:
+      containers:
+        - name: lezione-hpa-pod
+          image: ghostmio/immo2:v2
+
+          #definimao le risorse minime e massime per le istanze
+          resources:
+            requests: #risorse minime richieste
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
